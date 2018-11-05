@@ -129,6 +129,9 @@ namespace psi { namespace ccdensity {
 	    outfile->Printf( "\tIJKL energy                = %20.15f\n", two_energy);
 	    total_two_energy += two_energy;
       }
+
+      // global_dpd_->buf4_print(&G1, "outfile", 1);
+
       global_dpd_->buf4_close(&G1);
 
       /* E_ijka = 2 [ (2 Gijka - Gjika) <ij|ka> ] */
@@ -149,6 +152,9 @@ namespace psi { namespace ccdensity {
 	    outfile->Printf( "\tIJKA energy                = %20.15f\n", 4*two_energy);
 	    total_two_energy += 4*two_energy;
       }
+
+      global_dpd_->buf4_print(&G1, "outfile", 1);
+
       global_dpd_->buf4_close(&G1);
 
       /* E_ijab = [ (2 Gijab - Gijba) - GIBJA - GIbjA ] <ij|ab> */
@@ -174,6 +180,9 @@ namespace psi { namespace ccdensity {
 	    total_two_energy += two_energy;
       }
 
+
+      global_dpd_->buf4_print(&G1, "outfile", 1);
+
       global_dpd_->buf4_close(&G1);
 
       /* G'_IbJa = 2 GIBJA + 2 GIbJa */
@@ -189,6 +198,9 @@ namespace psi { namespace ccdensity {
 	    outfile->Printf( "\tIBJA energy                = %20.15f\n", two_energy);
 	    total_two_energy += two_energy;
       }
+
+      global_dpd_->buf4_print(&G1, "outfile", 1);
+
 
       global_dpd_->buf4_close(&G1);
 
@@ -214,6 +226,9 @@ namespace psi { namespace ccdensity {
 	    total_two_energy += 4*two_energy;
       }
 
+      global_dpd_->buf4_print(&G1, "outfile", 1);
+
+
       global_dpd_->buf4_close(&G1);
 
       /* E_abcd = (2 Gabcd - Gabdc) <ab|cd> */
@@ -232,6 +247,9 @@ namespace psi { namespace ccdensity {
 	    outfile->Printf( "\tABCD energy                = %20.15f\n", two_energy);
 	    total_two_energy += two_energy;
       }
+
+      global_dpd_->buf4_print(&G1, "outfile", 1);
+
 
       global_dpd_->buf4_close(&G1);
 

@@ -64,6 +64,9 @@ void build_X(void)
     global_dpd_->file2_scm(&X, -1.0);
     global_dpd_->file2_init(&I, PSIF_CC_OEI, 0, 0, 1, "I'IA");
     global_dpd_->file2_axpy(&I, &X, 1.0, 1);
+
+    global_dpd_->file2_print(&X, "outfile");
+
     global_dpd_->file2_close(&I);
     global_dpd_->file2_close(&X);
 

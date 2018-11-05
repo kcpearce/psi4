@@ -52,6 +52,7 @@ void OCCWave::omp2_tpdm_oovv()
     global_dpd_->buf4_init(&G, PSIF_OCC_DENSITY, 0, ID("[O,O]"), ID("[V,V]"),
                   ID("[O,O]"), ID("[V,V]"), 0, "TPDM <OO|VV>");
     global_dpd_->buf4_scm(&G, 0.25);
+    global_dpd_->buf4_print(&G, "outfile", 1);
     global_dpd_->buf4_close(&G);
 
  }// end RHF

@@ -187,6 +187,7 @@ PsiReturnType ccdensity(std::shared_ptr<Wavefunction> ref_wfn, Options &options)
     for (i = 0; i < params.nstates; ++i) {
         /* CC_GLG will contain L, or R0*L + Zeta, if relaxed and zeta is available */
         /* CC_GL will contain L */
+        //psio_tocprint(PSIF_CC_LAMPS);
         setup_LR(rho_params[i]);
 
         /* Calculate Xi, put Xi in EOM_XI, and quit */

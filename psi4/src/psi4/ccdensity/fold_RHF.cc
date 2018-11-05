@@ -129,6 +129,9 @@ namespace psi { namespace ccdensity {
       global_dpd_->file2_mat_rd(&D);
 
       global_dpd_->buf4_init(&G, PSIF_CC_GAMMA, 0, 0, 0, 0, 0, 0, "GIjKl");
+
+      //global_dpd_->buf4_print(&G, "outfile", 1);
+
       for(h=0; h < nirreps; h++) {
         global_dpd_->buf4_mat_irrep_init(&G, h);
         global_dpd_->buf4_mat_irrep_rd(&G, h);
@@ -158,6 +161,8 @@ namespace psi { namespace ccdensity {
 	  global_dpd_->buf4_mat_irrep_wrt(&G, h);
 	  global_dpd_->buf4_mat_irrep_close(&G, h);
       }
+
+      //global_dpd_->buf4_print(&G, "outfile", 1);
 
       if(params.debug_ && !params.aobasis) {
         /* Generate spin-adapted Gijkl just for the energy calculation */
@@ -213,6 +218,9 @@ namespace psi { namespace ccdensity {
 	  global_dpd_->buf4_mat_irrep_close(&G, h);
       }
 
+      //global_dpd_->buf4_print(&G, "outfile", 1);
+
+
       if(params.debug_ && !params.aobasis){
         /* Generate spin-adapted Gijka just for the energy calculation */
         global_dpd_->buf4_scmcopy(&G, PSIF_CC_GAMMA, "2 Gijka - Gjika", 2);
@@ -233,6 +241,11 @@ namespace psi { namespace ccdensity {
       global_dpd_->file2_close(&D1);
       global_dpd_->file2_mat_close(&D2);
       global_dpd_->file2_close(&D2);
+
+
+      global_dpd_->buf4_init(&G, PSIF_CC_GAMMA, 0, 0, 5, 0, 5, 0, "GIjAb");
+      //global_dpd_->buf4_print(&G, "outfile", 1);
+      global_dpd_->buf4_close(&G);
 
       if(!params.aobasis && params.debug_) {
 	    /* Generate spin-adapted Gijab jut for energy calculation */
@@ -318,6 +331,9 @@ namespace psi { namespace ccdensity {
 	    global_dpd_->buf4_mat_irrep_wrt(&G, h);
 	    global_dpd_->buf4_mat_irrep_close(&G, h);
       }
+
+      //global_dpd_->buf4_print(&G, "outfile", 1);
+
 
       global_dpd_->buf4_close(&G);
 

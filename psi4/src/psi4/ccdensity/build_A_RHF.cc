@@ -113,6 +113,8 @@ void build_A_RHF(void)
     global_dpd_->buf4_mat_irrep_close(&Amat, h);
   }
 
+  global_dpd_->buf4_print(&Amat, "outfile", 1);
+
   global_dpd_->buf4_close(&Amat);
 
   global_dpd_->file2_mat_close(&fIJ);

@@ -80,6 +80,8 @@ namespace psi { namespace ccdensity {
 	global_dpd_->file2_close(&D);
 	global_dpd_->file2_close(&F);
 
+    global_dpd_->file2_print(&I, "outfile");
+
 	global_dpd_->file2_close(&I);
       }
       else if(params.ref == 1) { /** ROHF **/
@@ -797,6 +799,9 @@ namespace psi { namespace ccdensity {
 	/* I'AB <-- sum_CIJ <IJ||CA> G(IJ,CB) + 2 sum_Ijc <Ij|Ac> G(Ij,Bc) */
 	global_dpd_->file2_init(&I, PSIF_CC_OEI, 0, 1, 1, "I'AB");
 
+    global_dpd_->file2_print(&I, "outfile");
+
+
 	global_dpd_->buf4_init(&G, PSIF_CC_GAMMA, 0, 0, 5, 0, 5, 0, "GIjAb");
 	global_dpd_->buf4_scmcopy(&G, PSIF_CC_GAMMA, "2 Gijab - Gijba", 2);
 	global_dpd_->buf4_sort_axpy(&G, PSIF_CC_GAMMA, pqsr, 0, 5, "2 Gijab - Gijba", -1);
@@ -807,6 +812,9 @@ namespace psi { namespace ccdensity {
 	global_dpd_->contract442(&Dints, &G, &I, 2, 2, 2.0, 1.0);
 	global_dpd_->buf4_close(&Dints);
 	global_dpd_->buf4_close(&G);
+
+    global_dpd_->file2_print(&I, "outfile");
+
 
 	global_dpd_->file2_close(&I);
       }

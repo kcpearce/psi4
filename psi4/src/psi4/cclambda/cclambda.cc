@@ -250,67 +250,73 @@ double CCLambdaWavefunction::compute_energy()
       denom(pL_params[i]); /* uses L_params.cceom_energy for excited states */
       init_amps(pL_params[i]); /* uses denominators for initial zeta guess */
 
-      outfile->Printf( "\n\t          Solving Lambda Equations\n");
-      outfile->Printf( "\t          ------------------------\n");
-      outfile->Printf( "\tIter     PseudoEnergy or Norm         RMS  \n");
-      outfile->Printf( "\t----     ---------------------     --------\n");
+      //My Changes:
+      sort_amps(pL_params[i].irrep);
+      Lsave_index(pL_params[i]); /* save Ls with indices in LAMPS */
+      Lamp_write(pL_params[i]); /* write out largest  Ls */
+      done=1;
 
-      moinfo.lcc = pseudoenergy(pL_params[i]);
-      update();
-
-      for(moinfo.iter=1 ; moinfo.iter <= params.maxiter; moinfo.iter++) {
-        sort_amps(pL_params[i].irrep);
-
-        /* must zero New L before adding RHS */
-        L_zero(pL_params[i].irrep);
-
-        if(params.wfn == "CC3") cc3_t3x();
-
-        if(params.wfn == "CC2" || params.wfn == "EOM_CC2") {
-
-      cc2_Gai_build(pL_params[i].irrep);
-      cc2_L1_build(pL_params[i]);
-      if(params.print & 2) status("L1 amplitudes", "outfile");
-      cc2_L2_build(pL_params[i]);
-
-        }
-        else {
-      G_build(pL_params[i].irrep);
-      L1_build(pL_params[i]);
-      if(params.print & 2) status("L1 amplitudes", "outfile");
-      L2_build(pL_params[i]);
-
-      if(params.wfn == "CC3") {
-        cc3_l3l2();
-        cc3_l3l1();
-      }
-        }
-
-        if (params.ref == 1) L_clean(pL_params[i]);
-        if (params.nstates > 2) ortho_Rs(pL_params, i);
-
-        if(converged(pL_params[i].irrep)) {
-          done = 1;  /* Boolean for convergence */
-          Lsave(pL_params[i].irrep); /* copy "New L" to "L" */
-          moinfo.lcc = pseudoenergy(pL_params[i]);
-          update();
-          if (!pL_params[i].ground && !params.zeta) {
-            Lnorm(pL_params[i]); /* normalize against R */
-          }
-          Lsave_index(pL_params[i]); /* save Ls with indices in LAMPS */
-          Lamp_write(pL_params[i]); /* write out largest  Ls */
-      /* sort_amps(); to be done by later functions */
-          outfile->Printf( "\n\tIterations converged.\n");
-
-          moinfo.iter = 0;
-          break;
-        }
-
-        if(params.diis) diis(moinfo.iter, pL_params[i].irrep);
-        Lsave(pL_params[i].irrep);
-        moinfo.lcc = pseudoenergy(pL_params[i]);
-        update();
-      }
+//      outfile->Printf( "\n\t          Solving Lambda Equations\n");
+//      outfile->Printf( "\t          ------------------------\n");
+//      outfile->Printf( "\tIter     PseudoEnergy or Norm         RMS  \n");
+//      outfile->Printf( "\t----     ---------------------     --------\n");
+//
+//      moinfo.lcc = pseudoenergy(pL_params[i]);
+//      update();
+//
+//      for(moinfo.iter=1 ; moinfo.iter <= params.maxiter; moinfo.iter++) {
+//        sort_amps(pL_params[i].irrep);
+//
+//        /* must zero New L before adding RHS */
+//        L_zero(pL_params[i].irrep);
+//
+//        if(params.wfn == "CC3") cc3_t3x();
+//
+//        if(params.wfn == "CC2" || params.wfn == "EOM_CC2") {
+//
+//      cc2_Gai_build(pL_params[i].irrep);
+//      cc2_L1_build(pL_params[i]);
+//      if(params.print & 2) status("L1 amplitudes", "outfile");
+//      cc2_L2_build(pL_params[i]);
+//
+//        }
+//        else {
+//      G_build(pL_params[i].irrep);
+//      L1_build(pL_params[i]);
+//      if(params.print & 2) status("L1 amplitudes", "outfile");
+//      L2_build(pL_params[i]);
+//
+//      if(params.wfn == "CC3") {
+//        cc3_l3l2();
+//        cc3_l3l1();
+//      }
+//        }
+//
+//        if (params.ref == 1) L_clean(pL_params[i]);
+//        if (params.nstates > 2) ortho_Rs(pL_params, i);
+//
+//        if(converged(pL_params[i].irrep)) {
+//          done = 1;  /* Boolean for convergence */
+//          Lsave(pL_params[i].irrep); /* copy "New L" to "L" */
+//          moinfo.lcc = pseudoenergy(pL_params[i]);
+//          update();
+//          if (!pL_params[i].ground && !params.zeta) {
+//            Lnorm(pL_params[i]); /* normalize against R */
+//          }
+//          Lsave_index(pL_params[i]); /* save Ls with indices in LAMPS */
+//          Lamp_write(pL_params[i]); /* write out largest  Ls */
+//      /* sort_amps(); to be done by later functions */
+//          outfile->Printf( "\n\tIterations converged.\n");
+//
+//          moinfo.iter = 0;
+//          break;
+//        }
+//
+//        if(params.diis) diis(moinfo.iter, pL_params[i].irrep);
+//        Lsave(pL_params[i].irrep);
+//        moinfo.lcc = pseudoenergy(pL_params[i]);
+//        update();
+//      }
       outfile->Printf( "\n");
       if(!done) {
         outfile->Printf( "\t ** Lambda not converged to %2.1e ** \n",

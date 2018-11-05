@@ -52,8 +52,11 @@ if (reference_ == "RESTRICTED") {
 	HG1->zero();
 	HG1->gemm(false, false, 1.0, HmoA, g1symm, 0.0);
 	GFock->add(HG1);
+    outfile->Printf("\n Current GFock Matrix:\n");
+    GFock->print();
 	Ecc_rdm = HG1->trace() + Enuc; // One-electron contribution to MP2L
         Eopdm = Ecc_rdm;
+    //Eopdm->print();
 	//outfile->Printf("\tOPDM energy (a.u.)          : %12.14f\n", Ecc_rdm);
 
         // 2e-part
@@ -63,7 +66,6 @@ if (reference_ == "RESTRICTED") {
 	psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 	psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
-
 
 if (wfn_type_ != "OMP2") {
    // Build X intermediate
@@ -112,6 +114,8 @@ if (wfn_type_ != "OMP2") {
 	global_dpd_->contract442(&K, &G, &GF, 3, 3, 4.0, 0.0);
 	global_dpd_->buf4_close(&K);
 	global_dpd_->buf4_close(&G);
+    
+    global_dpd_->file2_print(&GF, "outfile");
 
 if (wfn_type_ == "OMP2" && incore_iabc_ == 1) {
         dpdfile2 G;

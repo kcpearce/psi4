@@ -56,7 +56,7 @@ namespace psi {
 
   int psio_tocwrite(size_t unit);
   int psio_tocread(size_t unit);
-  void psio_tocprint(size_t unit, FILE *output);
+  void psio_tocprint(size_t unit);
   psio_tocentry *psio_tocscan(size_t unit, const char *key);
   bool psio_tocentry_exists(size_t unit, const char *key);
   psio_tocentry *psio_toclast(size_t unit);

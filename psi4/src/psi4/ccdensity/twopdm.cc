@@ -60,11 +60,11 @@ void Gijab(void);
 void twopdm(void)
 {
 /*  V_build(); */
-  Gijkl();
-  Gabcd();
-  Gijka();
-  Gciab();
-  Gibja();
+  //Gijkl();
+  //Gabcd();
+  //Gijka();
+  //Gciab();
+  //Gibja();
   Gijab();
 }
 

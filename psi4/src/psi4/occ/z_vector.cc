@@ -148,6 +148,8 @@ if (reference_ == "RESTRICTED") {
 
     // Solve the orb-resp equations
     pcg_conver = 0;// here 0 means successfull
+    zvectorA->print();
+    Aorb->print();
     if (lineq == "CDGESV") Aorb->cdgesv(zvectorA, pcg_conver);
     else if (lineq == "FLIN") {
          double det = 0.0;

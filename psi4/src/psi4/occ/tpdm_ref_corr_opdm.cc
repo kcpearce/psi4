@@ -160,6 +160,10 @@ void OCCWave::tpdm_corr_opdm()
     // TPDM <OO|OO>
     global_dpd_->buf4_init(&G, PSIF_OCC_DENSITY, 0, ID("[O,O]"), ID("[O,O]"),
                   ID("[O,O]"), ID("[O,O]"), 0, "TPDM <OO|OO>");
+
+    global_dpd_->buf4_print(&G, "outfile", 1);
+    gamma1corr->print();
+
       for(int h = 0; h < nirrep_; ++h){
         global_dpd_->buf4_mat_irrep_init(&G, h);
         global_dpd_->buf4_mat_irrep_rd(&G, h);

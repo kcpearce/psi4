@@ -89,8 +89,10 @@ void build_Z_RHF(void)
   global_dpd_->file2_mat_init(&D);
   for(h=0,count=0; h < nirreps; h++)
     for(a=0; a < D.params->rowtot[h]; a++)
-      for(i=0; i < D.params->coltot[h]; i++)
+      for(i=0; i < D.params->coltot[h]; i++) {
 	D.matrix[h][a][i] = X[count++];
+    outfile->Printf("Z Vector: %lf\n",D.matrix[h][a][i]); 
+      }
   global_dpd_->file2_mat_wrt(&D);
   global_dpd_->file2_mat_close(&D);
   global_dpd_->file2_close(&D);

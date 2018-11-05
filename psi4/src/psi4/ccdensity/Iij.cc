@@ -62,15 +62,20 @@ namespace psi { namespace ccdensity {
       if(params.ref == 0) { /** RHF **/
 	/* I'IJ <-- sum_K fIK (DJK + DKJ) + sum_A fIA (DJA + DAJ) */
 	global_dpd_->file2_init(&I, PSIF_CC_OEI, 0, 0, 0, "I'IJ");
-
 	global_dpd_->file2_init(&F, PSIF_CC_OEI, 0, 0, 0, "fIJ");
 	global_dpd_->file2_init(&D, PSIF_CC_OEI, 0, 0, 0, rho_params.DIJ_lbl);
 	global_dpd_->contract222(&F, &D, &I, 0, 0, 1.0, 0.0);
 	global_dpd_->contract222(&F, &D, &I, 0, 1, 1.0, 1.0);
 	global_dpd_->file2_close(&D);
 
+    global_dpd_->file2_print(&I, "outfile");
+
+
 	/* Add reference contribution: I'IJ <-- 2 fIJ */
 	global_dpd_->file2_axpy(&F, &I, 2.0, 0);
+
+    global_dpd_->file2_print(&F, "outfile");
+
 	global_dpd_->file2_close(&F);
 
 	global_dpd_->file2_init(&F, PSIF_CC_OEI, 0, 0, 1, "fIA");
@@ -81,6 +86,9 @@ namespace psi { namespace ccdensity {
 	global_dpd_->contract222(&F, &D, &I, 0, 0, 1.0, 1.0);
 	global_dpd_->file2_close(&D);
 	global_dpd_->file2_close(&F);
+
+    global_dpd_->file2_print(&I, "outfile");
+
 
 	global_dpd_->file2_close(&I);
       }
@@ -548,6 +556,8 @@ namespace psi { namespace ccdensity {
 	global_dpd_->buf4_close(&Cints);
 	global_dpd_->file2_close(&D);
 
+    global_dpd_->file2_print(&I, "outfile");
+
 	global_dpd_->file2_close(&I);
       }
       else if(params.ref == 1) { /** ROHF **/
@@ -663,7 +673,6 @@ namespace psi { namespace ccdensity {
 	global_dpd_->contract442(&Aints, &G, &I, 0, 0, 2.0, 1.0);
 	global_dpd_->buf4_close(&G);
 	global_dpd_->buf4_close(&Aints);
-
 	global_dpd_->file2_close(&I);
 
 	/* I'ij <-- sum_klm <ik||lm> G(jk,lm) + 2 sum_KlM <Ki|Ml> G(Kj,Ml) */
@@ -856,6 +865,9 @@ namespace psi { namespace ccdensity {
 	global_dpd_->contract442(&Dints, &G, &I, 0, 0, 2.0, 1.0);
 	global_dpd_->buf4_close(&Dints);
 	global_dpd_->buf4_close(&G);
+
+    global_dpd_->file2_print(&I, "outfile");
+
 
 	global_dpd_->file2_close(&I);
       }
@@ -1212,6 +1224,9 @@ namespace psi { namespace ccdensity {
 	global_dpd_->contract442(&Eints, &G, &I, 2, 2, 2.0, 1.0);
 	global_dpd_->buf4_close(&Eints);
 	global_dpd_->buf4_close(&G);
+
+    global_dpd_->file2_print(&I, "outfile");
+
 
 	global_dpd_->file2_close(&I);
       }

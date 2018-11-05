@@ -56,6 +56,10 @@ void G_build(void) {
     /* T2(MJ,AB) * L2(IJ,AB) --> G(M,I) */
     global_dpd_->buf4_init(&tIJAB, PSIF_CC_TAMPS, 0, 0, 7, 2, 7, 0, "tIJAB");
     global_dpd_->buf4_init(&LIJAB, PSIF_CC_GLG, G_irr, 0, 7, 2, 7, 0, "LIJAB");
+
+    global_dpd_->buf4_print(&tIJAB, "outfile", 1);
+    global_dpd_->buf4_print(&LIJAB, "outfile", 1);
+
     global_dpd_->contract442(&tIJAB, &LIJAB, &GMI, 0, 0, 1.0, 0.0);
     global_dpd_->buf4_close(&tIJAB);
     global_dpd_->buf4_close(&LIJAB);
@@ -63,6 +67,10 @@ void G_build(void) {
     /* T2(Mj,Ab) * L2(Ij,Ab) --> G(M,I) */
     global_dpd_->buf4_init(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
     global_dpd_->buf4_init(&LIjAb, PSIF_CC_GLG, G_irr, 0, 5, 0, 5, 0, "LIjAb");
+
+    global_dpd_->buf4_print(&tIjAb, "outfile", 1);
+    global_dpd_->buf4_print(&LIjAb, "outfile", 1);
+
     global_dpd_->contract442(&tIjAb, &LIjAb, &GMI, 0, 0, 1.0, 1.0);
     global_dpd_->buf4_close(&tIjAb);
     global_dpd_->buf4_close(&LIjAb);
@@ -80,6 +88,9 @@ void G_build(void) {
     global_dpd_->contract442(&tiJaB, &LiJaB, &Gmi, 0, 0, 1.0, 1.0);
     global_dpd_->buf4_close(&tiJaB);
     global_dpd_->buf4_close(&LiJaB);
+
+    global_dpd_->file2_print(&Gmi, "outfile");
+    global_dpd_->file2_print(&GMI, "outfile");
 
     global_dpd_->file2_close(&Gmi);
     global_dpd_->file2_close(&GMI);
@@ -116,6 +127,10 @@ void G_build(void) {
     global_dpd_->contract442(&LiJaB, &tiJaB, &Gae, 2, 2, -1.0, 1.0);
     global_dpd_->buf4_close(&tiJaB);
     global_dpd_->buf4_close(&LiJaB);
+
+    global_dpd_->file2_print(&GAE, "outfile");
+    global_dpd_->file2_print(&Gae, "outfile");
+
 
     global_dpd_->file2_close(&GAE);
     global_dpd_->file2_close(&Gae);
